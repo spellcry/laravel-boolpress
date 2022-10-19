@@ -77,7 +77,14 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $params = $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required|min:5'
+        ]);        
+        $params['slug'] = str_replace(' ', '-', $params['title']);
+        $post->update($params);
+
+        return redirect()->route('admin.posts.show', $post);
     }
 
     /**
