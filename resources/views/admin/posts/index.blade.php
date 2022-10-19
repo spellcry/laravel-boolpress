@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <table class="table">
@@ -31,8 +31,14 @@
                           <td>{{ $post->title }}</td>
                           <td>{{ $post->slug }}</td>
                           <td>{{ $post->created_at }}</td>
-                          <td><a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-primary btn-sm">Modifica</a></td>
-                          <td><a href="{{ route('admin.posts.destroy', $post) }}" class="btn btn-danger btn-sm">Elimina</a></td>
+                          <td><a href="{{ route('admin.posts.show', $post) }}" class="btn btn-primary btn-sm">Vedi</a></td>
+                          <td>
+                            <form action="{{ route('admin.posts.destroy', $post) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="Elimina" class="btn btn-danger btn-sm">
+                            </form>
+                          </td>
                         </tr>                                                  
                         @endforeach
                     </tbody>
