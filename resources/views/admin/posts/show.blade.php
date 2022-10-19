@@ -29,7 +29,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                {{ $post->content }}
+                {!! $post->content !!}
             </div>
         </div>
     </div>
