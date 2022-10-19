@@ -16,7 +16,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Title" value="@php echo old('title') @endphp">
+                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Title" value="@php echo old('title') @endphp">
                             @error('title')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -25,9 +25,14 @@
                         </div>
                         <div class="form-group">
                             <label for="content">Content</label>                            
-                            <textarea id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+                            <textarea id="content" class="form-control @error('content') is-invalid @enderror" name="content" cols="30" rows="10" placeholder="Content"></textarea>
+                            @error('content')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>                                
+                            @enderror
                         </div>
-                        <a href="{{ route('admin.posts.store') }}" class="btn btn-primary btn-sm">Salva</a>
+                        <input type="submit" class="btn btn-primary btn-sm" value="Salva">
                     </form>
                 </div>
             </div>

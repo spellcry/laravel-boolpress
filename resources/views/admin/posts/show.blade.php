@@ -16,7 +16,8 @@
                 </ul>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
-                <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-primary btn-sm">Modifica</a>
+                <a href="{{ route('admin.posts.index') }}" class="btn btn-primary btn-sm mr-3">Elenco post</a>
+                <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-primary btn-sm mr-3">Modifica</a>
                 <form action="{{ route('admin.posts.destroy', $post) }}" method="POST">
                     @csrf
                     @method('DELETE')
