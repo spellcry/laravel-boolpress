@@ -27,10 +27,31 @@
         </div>
     </div>
     <div class="container">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-12">
                 {!! $post->content !!}
             </div>
         </div>
+        <div class="row mb-3">
+            <div class="col-12">                
+                <h5>Categoria: {{ $post->category ? $post->category->name : 'Nessuna categoria' }}</h5>
+            </div>
+        </div>
+        @if ( isset($post->category->posts) )
+            <div class="row">
+                <div class="col-12">                
+                    <h5 class="mb-3">Altri post della stessa categoria</h5>
+                    <ul>
+                        @foreach ($post->category->posts as $postSameCategory)
+                            @if ($postSameCategory->title != $post->title)
+                                <li>                                
+                                    <a href="{{ route('admin.posts.show', $postSameCategory) }}">{{ $postSameCategory->title }}</a>
+                                </li>                                
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+            </div>            
+        @endif
     </div>
 @endsection
