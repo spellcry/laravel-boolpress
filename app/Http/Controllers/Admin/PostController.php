@@ -45,7 +45,7 @@ class PostController extends Controller
             'content' => 'required|min:5',
             'category_id' => 'nullable|exists:App\Category,id'
         ]);        
-        $params['slug'] = Str::slug($params['title']);
+        $params['slug'] = Post::getUniqueSlugFrom($params['title']);
         $post = Post::create($params);
         return redirect()->route('admin.posts.show', $post);
     }
@@ -86,8 +86,10 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required|min:5',
             'category_id' => 'nullable|exists:App\Category,id'
-        ]);        
-        $params['slug'] = Str::slug($params['title']);
+        ]);
+        if ( $params['title'] != $post->title ) {
+            $params['slug'] = Post::getUniqueSlugFrom($params['title']);
+        }        
         $post->update($params);
 
         return redirect()->route('admin.posts.show', $post);
