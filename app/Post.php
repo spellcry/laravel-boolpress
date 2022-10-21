@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -16,4 +17,17 @@ class Post extends Model
     public function category() {
         return $this->belongsTo('App\Category');
     }
+
+    public static function getUniqueSlugFrom($value) {
+        $slug = Str::slug($value);
+        $slug_modificato = $slug;
+        $post_esistente = Post::where('slug', $slug)->first();
+        $counter = 1;
+        while ( $post_esistente ) {
+            $slug_modificato = $slug . '-' . $counter;
+            $post_esistente = Post::where('slug', $slug_modificato)->first();
+            $counter++;
+        }
+        return $slug_modificato;
+    } 
 }
