@@ -25,6 +25,20 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="category">Category</label>                            
+                            <select name="category_id" id="category" class="form-control @error('category_id') is-invalid @enderror">
+                                    <option value="">--Nessuna Categoria--</option>
+                                @foreach ($categories as $category)
+                                    <option @if( old('category_id', $post->category_id) == $category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('category_id')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>                                
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="content">Content</label>                            
                             <textarea id="content" class="form-control @error('content') is-invalid @enderror" name="content" cols="30" rows="10" placeholder="Content">{{ old('content', $post->content) }}</textarea>
                             @error('content')
