@@ -42,7 +42,7 @@
                     <h5 class="mb-3">Altri post della stessa categoria</h5>
                     <ul>
                         @foreach ($post->category->posts as $postSameCategory)
-                            @if ($postSameCategory->title != $post->title)
+                            @if ($postSameCategory->slug != $post->slug)
                                 <li>                                
                                     <a href="{{ route('admin.posts.show', $postSameCategory) }}">{{ $postSameCategory->title }}</a>
                                 </li>                                
