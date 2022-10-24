@@ -51,7 +51,7 @@ class PostController extends Controller
         $params['slug'] = Post::getUniqueSlugFrom($params['title']);
         $post = Post::create($params);
 
-        $post->tags()->sync($params['tags']);
+        $post->tags()->sync(isset($params['tags']) ? $params['tags'] : []);
 
         return redirect()->route('admin.posts.show', $post);
     }
