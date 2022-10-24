@@ -53,12 +53,10 @@
                 <div class="col-12">                
                     <h5 class="mb-3">Altri post della stessa categoria</h5>
                     <ul>
-                        @foreach ($post->category->posts as $postSameCategory)
-                            @if ($postSameCategory->slug != $post->slug)
-                                <li>                                
-                                    <a href="{{ route('admin.posts.show', $postSameCategory) }}">{{ $postSameCategory->title }}</a>
-                                </li>                                
-                            @endif
+                        @foreach ($post->category->posts()->where('slug', '!=', $post->slug)->orderBy('title', 'asc')->get() as $postSameCategory)
+                            <li>                                
+                                <a href="{{ route('admin.posts.show', $postSameCategory) }}">{{ $postSameCategory->title }}</a>
+                            </li>                                        
                         @endforeach
                     </ul>
                 </div>
