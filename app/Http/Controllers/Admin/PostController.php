@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -29,7 +30,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::orderBy('name', 'asc')->get();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -43,10 +45,14 @@ class PostController extends Controller
         $params = $request->validate([
             'title' => 'required|max:255',
             'content' => 'required|min:5',
-            'category_id' => 'nullable|exists:App\Category,id'
+            'category_id' => 'nullable|exists:App\Category,id',
+            'tags' => 'exists:tags,id'
         ]);        
         $params['slug'] = Post::getUniqueSlugFrom($params['title']);
         $post = Post::create($params);
+
+        $post->tags()->sync($params['tags']);
+
         return redirect()->route('admin.posts.show', $post);
     }
 
@@ -70,7 +76,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post','categories'));
+        $tags = Tag::orderBy('name', 'asc')->get();
+        return view('admin.posts.edit', compact('post','categories', 'tags'));
     }
 
     /**
@@ -85,12 +92,15 @@ class PostController extends Controller
         $params = $request->validate([
             'title' => 'required|max:255',
             'content' => 'required|min:5',
-            'category_id' => 'nullable|exists:App\Category,id'
+            'category_id' => 'nullable|exists:App\Category,id',
+            'tags' => 'exists:tags,id'
         ]);
         if ( $params['title'] != $post->title ) {
             $params['slug'] = Post::getUniqueSlugFrom($params['title']);
         }        
         $post->update($params);
+
+        $post->tags()->sync($params['tags']);
 
         return redirect()->route('admin.posts.show', $post);
     }

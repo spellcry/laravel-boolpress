@@ -18,6 +18,10 @@ class Post extends Model
         return $this->belongsTo('App\Category');
     }
 
+    public function tags() {
+        return $this->belongsToMany('App\Tag');
+    }
+
     public static function getUniqueSlugFrom($value) {
         $slug = Str::slug($value);
         $slug_modificato = $slug;
