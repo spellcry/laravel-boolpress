@@ -6,6 +6,18 @@
             <div class="col-8">
                 <h1>{{ $post->title }}</h1>
                 <p>{{ $post->slug }}</p>
+                <p>Tags: 
+                    @forelse ($post->tags as $tag)
+                        {{ $tag->name }}
+                        @if (!$loop->last)
+                        - 
+                        @endif
+                    @empty
+                        -
+                    @endforelse
+                </p>
+                <p></p>
+                
                 <ul class="list-group flex-row mb-3">
                     <li class="list-group-item rounded mr-4">
                         Created at: {{ $post->created_at }}

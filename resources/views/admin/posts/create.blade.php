@@ -36,6 +36,17 @@
                                 </div>                                
                             @enderror
                         </div>
+                        <div class="form-group d-flex flex-column">
+                            <label for="category">Tags</label> 
+                            <div class="d-flex">
+                                @foreach ($tags as $tag)
+                                    <div class="form-check mr-2">
+                                        <input type="checkbox" @if( in_array($tag->id, old('tags', [])) ) checked @endif class="form-check-input" name="tags[]" id="tags-{{ $tag->id }}" value="{{ $tag->id }}">
+                                        <label class="form-check-label" for="tags-{{ $tag->id }}">{{ $tag->name }}</label>
+                                    </div>                            
+                                @endforeach
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="content">Content</label>                            
                             <textarea id="content" class="form-control @error('content') is-invalid @enderror" name="content" cols="30" rows="10" placeholder="Content">{{ old('content') }}</textarea>
