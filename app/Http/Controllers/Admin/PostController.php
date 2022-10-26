@@ -111,6 +111,10 @@ class PostController extends Controller
         }    
         
         if( array_key_exists('image', $params) ) {
+            $cover = $post->cover;
+            if( $cover && Storage::exists($cover) ) {
+                Storage::delete($cover);
+            }
             $image_path = Storage::put('post_covers', $params['image']);
             $params['cover'] = $image_path;
         }

@@ -41,7 +41,9 @@
         <div class="row mb-3">
             <div class="col-12">
                 @if ( isset($post->cover) )
-                    <img src="{{ asset('storage/'.$post->cover) }}" alt=""  style="display: block;" max-width="100%" max-height="400px" class="mb-2">                    
+                    <div class="img mb-2">
+                        <img src="{{ asset('storage/'.$post->cover) }}" alt=""  style="display: block;" width="100%" max-height="400px">                    
+                    </div>
                 @endif
                 {!! $post->content !!}
             </div>
