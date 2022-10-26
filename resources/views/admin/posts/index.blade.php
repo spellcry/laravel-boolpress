@@ -35,7 +35,7 @@
                           <td>{{ $post->category ? $post->category->name : '-' }}</td>                          
                           <td>
                               @forelse ($post->tags as $tag)
-                                  {{ $tag->name }}
+                                  <a href="{{ route('admin.tags.show', $tag) }}">{{ $tag->name }}</a>
                                   @if (!$loop->last)
                                     - 
                                   @endif
