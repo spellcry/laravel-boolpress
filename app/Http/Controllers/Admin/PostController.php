@@ -114,7 +114,7 @@ class PostController extends Controller
             $params['slug'] = Post::getUniqueSlugFrom($params['title']);
         }    
         
-        if( array_key_exists('delete_img', $params) ) {            
+        if( array_key_exists('delete_img', $params) || array_key_exists('image', $params) ) {            
             if( $cover && Storage::exists($cover) ) {
                 Storage::delete($cover);
                 $params['cover'] = null;
@@ -122,9 +122,6 @@ class PostController extends Controller
         }
 
         if( array_key_exists('image', $params) ) {
-            if( $cover && Storage::exists($cover) ) {
-                Storage::delete($cover);
-            }
             $image_path = Storage::put('post_covers', $params['image']);
             $params['cover'] = $image_path;
         }
