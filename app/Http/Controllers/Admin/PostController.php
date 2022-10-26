@@ -104,14 +104,24 @@ class PostController extends Controller
             'content' => 'required|min:5',
             'category_id' => 'nullable|exists:App\Category,id',
             'tags' => 'exists:tags,id',
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048',
+            'delete_img' => 'nullable|max:1'
         ]);
+
+        $cover = $post->cover;
+
         if ( $params['title'] != $post->title ) {
             $params['slug'] = Post::getUniqueSlugFrom($params['title']);
         }    
         
+        if( array_key_exists('delete_img', $params) ) {            
+            if( $cover && Storage::exists($cover) ) {
+                Storage::delete($cover);
+                $params['cover'] = null;
+            }
+        }
+
         if( array_key_exists('image', $params) ) {
-            $cover = $post->cover;
             if( $cover && Storage::exists($cover) ) {
                 Storage::delete($cover);
             }

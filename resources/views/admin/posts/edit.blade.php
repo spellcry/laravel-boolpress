@@ -51,12 +51,18 @@
                         </div>
                         <div class="form-group">
                             <label for="image">Immagine cover</label>
-                            <input type="file" class="form-control-file @error('image') is-invalid @enderror" name="image" id="image">
+                            <input type="file" class="form-control-file @error('image') is-invalid @enderror" name="image" id="image">                            
                             @error('image')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>                                
                             @enderror
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="checkbox" @if(old('delete_img')) checked @endif class="form-check-input" name="delete_img" id="delete_img" value="1">
+                                <label class="form-check-label" for="delete_img">Elimina immagine</label>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="content">Content</label>                            
