@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="image">Immagine cover</label>
+                            <label for="image">Aggiungi immagine cover</label>
                             <input type="file" class="form-control-file @error('image') is-invalid @enderror" name="image" id="image">
                             @error('image')
                                 <div class="invalid-feedback">
