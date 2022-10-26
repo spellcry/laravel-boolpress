@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Post extends Model
@@ -35,4 +36,8 @@ class Post extends Model
         }
         return $slug_modificato;
     } 
+
+    public function getCoverPathAttribute() {
+        return Storage::disk('images')->url($this->cover);
+    }
 }

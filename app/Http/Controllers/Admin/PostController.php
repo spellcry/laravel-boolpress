@@ -53,7 +53,7 @@ class PostController extends Controller
         $params['slug'] = Post::getUniqueSlugFrom($params['title']);
 
         if( array_key_exists('image', $params) ) {
-            $image_path = Storage::put('post_covers', $params['image']);
+            $image_path = Storage::disk('images')->put('post_covers', $params['image']);
             $params['cover'] = $image_path;
         }
 
@@ -115,14 +115,14 @@ class PostController extends Controller
         }    
         
         if( array_key_exists('delete_img', $params) || array_key_exists('image', $params) ) {            
-            if( $cover && Storage::exists($cover) ) {
-                Storage::delete($cover);
+            if( $cover && Storage::disk('images')->exists($cover) ) {
+                Storage::disk('images')->delete($cover);
                 $params['cover'] = null;
             }
         }
 
         if( array_key_exists('image', $params) ) {
-            $image_path = Storage::put('post_covers', $params['image']);
+            $image_path = Storage::disk('images')->put('post_covers', $params['image']);
             $params['cover'] = $image_path;
         }
 
@@ -147,8 +147,8 @@ class PostController extends Controller
         
         $post->delete();
         
-        if( $cover && Storage::exists($cover) ) {
-            Storage::delete($cover);
+        if( $cover && Storage::disk('images')->exists($cover) ) {
+            Storage::disk('images')->delete($cover);
         }
         return redirect()->route('admin.posts.index');
     }
