@@ -40,6 +40,9 @@
     <div class="container">
         <div class="row mb-3">
             <div class="col-12">
+                @if ( isset($post->cover) )
+                    <img src="{{ asset('storage/'.$post->cover) }}" alt=""  style="display: block;" max-width="100%" max-height="400px" class="mb-2">                    
+                @endif
                 {!! $post->content !!}
             </div>
         </div>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -46,12 +47,21 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required|min:5',
             'category_id' => 'nullable|exists:App\Category,id',
-            'tags' => 'exists:tags,id'
-        ]);        
+            'tags' => 'exists:tags,id',
+            'image' => 'nullable|image|max:2048'
+        ]);       
         $params['slug'] = Post::getUniqueSlugFrom($params['title']);
+
+        if( array_key_exists('image', $params) ) {
+            $image_path = Storage::put('post_covers', $params['image']);
+            $params['cover'] = $image_path;
+        }
+
         $post = Post::create($params);
 
-        $post->tags()->sync(isset($params['tags']) ? $params['tags'] : []);
+        if( array_key_exists('tags', $params)) {
+            $post->tags()->sync($params['tags']);
+        }
 
         return redirect()->route('admin.posts.show', $post);
     }
@@ -93,14 +103,23 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required|min:5',
             'category_id' => 'nullable|exists:App\Category,id',
-            'tags' => 'exists:tags,id'
+            'tags' => 'exists:tags,id',
+            'image' => 'nullable|image|max:2048'
         ]);
         if ( $params['title'] != $post->title ) {
             $params['slug'] = Post::getUniqueSlugFrom($params['title']);
-        }        
+        }    
+        
+        if( array_key_exists('image', $params) ) {
+            $image_path = Storage::put('post_covers', $params['image']);
+            $params['cover'] = $image_path;
+        }
+
         $post->update($params);
 
-        $post->tags()->sync(isset($params['tags']) ? $params['tags'] : []);
+        if( array_key_exists('tags', $params)) {
+            $post->tags()->sync($params['tags']);
+        }
 
         return redirect()->route('admin.posts.show', $post);
     }
@@ -113,7 +132,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $cover = $post->cover;
+        
         $post->delete();
+        
+        if( $cover && Storage::exists($cover) ) {
+            Storage::delete($cover);
+        }
         return redirect()->route('admin.posts.index');
     }
 }
