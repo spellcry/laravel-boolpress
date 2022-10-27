@@ -15,7 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        
+        $categories = Category::orderBy('name')->get();
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -47,7 +48,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return view('admin.categories.show', compact('category'));
     }
 
     /**

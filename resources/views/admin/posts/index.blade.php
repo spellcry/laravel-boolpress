@@ -32,7 +32,15 @@
                           <th scope="row">{{ $post->id }}</th>
                           <td>{{ $post->title }}</td>
                           <td>{{ $post->slug }}</td>
-                          <td>{{ $post->category ? $post->category->name : '-' }}</td>                          
+                          <td>
+                            @if($post->category)
+                                <a href="{{ route('admin.categories.show', $post->category) }}">
+                                    {{ $post->category->name }}
+                                </a>                                                        
+                            @else
+                                -
+                            @endif
+                          </td>                          
                           <td>
                               @forelse ($post->tags as $tag)
                                   <a href="{{ route('admin.tags.show', $tag) }}">{{ $tag->name }}</a>
