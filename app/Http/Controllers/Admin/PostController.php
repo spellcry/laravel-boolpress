@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Mail\SendPostCreatedMail;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -62,6 +64,8 @@ class PostController extends Controller
         if( array_key_exists('tags', $params)) {
             $post->tags()->sync($params['tags']);
         }
+
+        Mail::to($request->user())->send(new SendPostCreatedMail($post));
 
         return redirect()->route('admin.posts.show', $post);
     }
