@@ -8,7 +8,7 @@
             Category: {{ post.category.name }}
         </p>
         <p v-if="post.tags" class="post__tags">
-            Tags: <span v-for="(tag, index) in post.tags">{{ tag.name }} {{ index < post.tags.length ? ' - ' : '' }}</span>
+            Tags: <span v-for="(tag, index) in post.tags">{{ tag.name }}{{ index < post.tags.length - 1 ? ' - ' : '' }}</span>
         </p>
         <p class="post__created-at">
             {{ post.date }}
