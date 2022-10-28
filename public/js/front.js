@@ -1989,9 +1989,13 @@ var render = function render() {
     }
   }) : _vm._e(), _vm._v(" "), _c("h3", {
     staticClass: "post__title"
-  }, [_vm._v("\n        " + _vm._s(_vm.post.title) + "\n    ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n        " + _vm._s(_vm.post.title) + "\n    ")]), _vm._v(" "), _vm.post.category ? _c("p", {
     staticClass: "post__category"
-  }, [_vm._v("\n        " + _vm._s(_vm.post.category ? _vm.post.category.name : null) + "\n    ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n        Category: " + _vm._s(_vm.post.category.name) + "\n    ")]) : _vm._e(), _vm._v(" "), _vm.post.tags ? _c("p", {
+    staticClass: "post__tags"
+  }, [_vm._v("\n        Tags: "), _vm._l(_vm.post.tags, function (tag, index) {
+    return _c("span", [_vm._v(_vm._s(tag.name) + " " + _vm._s(index < _vm.post.tags.length ? " - " : ""))]);
+  })], 2) : _vm._e(), _vm._v(" "), _c("p", {
     staticClass: "post__created-at"
   }, [_vm._v("\n        " + _vm._s(_vm.post.date) + "\n    ")])]);
 };
