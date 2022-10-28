@@ -1911,8 +1911,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      title: 'Boolpress Vue'
+      title: 'Boolpress Vue',
+      posts: []
     };
+  },
+  methods: {
+    fetchPosts: function fetchPosts() {
+      var _this = this;
+      axios.get('/api/posts').then(function (res) {
+        var posts = res.data.posts;
+        _this.posts = posts;
+      });
+    }
+  },
+  beforeMount: function beforeMount() {
+    this.fetchPosts();
   }
 });
 
@@ -1940,7 +1953,9 @@ var render = function render() {
     staticClass: "col-12"
   }, [_c("h1", {
     staticClass: "text-center"
-  }, [_vm._v(_vm._s(_vm.title))])])])]);
+  }, [_vm._v(_vm._s(_vm.title))]), _vm._v(" "), _c("ul", _vm._l(_vm.posts, function (post) {
+    return _c("li", [_vm._v(_vm._s(post.title))]);
+  }), 0)])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
