@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/admin', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin/home', 'HomeController@index')->name('home');
 
 Route::middleware('auth')
     ->prefix('/admin')
@@ -31,3 +31,7 @@ Route::middleware('auth')
         Route::resource('tags', 'TagController');
         Route::resource('categories', 'CategoryController');
 });
+
+Route::get('/{any?}', function() {
+    return view('guest.home');
+})->where('any', '.*');
