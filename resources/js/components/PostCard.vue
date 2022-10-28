@@ -4,8 +4,11 @@
         <h3 class="post__title">
             {{ post.title }}
         </h3>
-        <p class="post__category">
-            {{ post.category ? post.category.name : null }}
+        <p v-if="post.category" class="post__category">
+            Category: {{ post.category.name }}
+        </p>
+        <p v-if="post.tags" class="post__tags">
+            Tags: <span v-for="(tag, index) in post.tags">{{ tag.name }} {{ index < post.tags.length ? ' - ' : '' }}</span>
         </p>
         <p class="post__created-at">
             {{ post.date }}
