@@ -38,6 +38,12 @@ class Post extends Model
     } 
 
     public function getCoverPathAttribute() {
-        return Storage::disk('images')->url($this->cover);
+        return $this->cover ? Storage::disk('images')->url($this->cover) : null;
     }
+
+    public function getDateAttribute() {
+        return $this->created_at->format('d/m/Y');
+    }
+
+    protected $appends = ['date', 'cover_path'];
 }

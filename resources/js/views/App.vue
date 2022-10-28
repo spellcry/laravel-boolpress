@@ -3,9 +3,9 @@
         <div class="row mb-3">
             <div class="col-12">
                 <h1 class="title text-center mb-3">{{ title }}</h1>
-                <ul>
-                    <li v-for="post in posts">
-                        {{ post.title }}                        
+                <ul class="post-list">
+                    <li class="list-item" v-for="post in posts" :key="post.id">                        
+                        <PostCard :post="post" />
                     </li>
                 </ul>
             </div>
@@ -36,30 +36,31 @@ import PostCard from '../components/PostCard.vue'
 export default {
     data() {
         return {
-            title: 'Boolpress Vue',
+            title: "Boolpress Vue",
             posts: [],
             current_page: 1,
             last_page: 0,
-        }
+        };
     },
     methods: {
         fetchPosts(page = 1) {
-            axios.get('/api/posts', {
+            axios.get("/api/posts", {
                 params: {
                     page: page
                 }
             })
                 .then((res) => {
-                    const { data, current_page, last_page } = res.data.result
-                    this.posts = data
-                    this.last_page = last_page
-                    this.current_page = current_page
-                })
+                const { data, current_page, last_page } = res.data.result;
+                this.posts = data;
+                this.last_page = last_page;
+                this.current_page = current_page;
+            });
         },
     },
     beforeMount() {
-        this.fetchPosts()
-    }
+        this.fetchPosts();
+    },
+    components: { PostCard }
 }
 </script>
 <style lang="scss" scoped>
@@ -67,6 +68,15 @@ export default {
         font-size: 4rem;
         font-weight: bold;
         color: red;
+    }
+    .post-list {
+        list-style-type: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .list-item {
+        flex-basis: calc(calc(100% - calc(1rem * 2)) / 3);
     }
     .pages{
         display: flex;
