@@ -5,7 +5,9 @@
                 <h1 class="title text-center mb-3">{{ title }}</h1>
                 <ul class="post-list">
                     <li class="list-item" v-for="post in posts" :key="post.id">                        
-                        <PostCard :post="post" />
+                        <router-link :to="{ name: 'posts.show', params: { slug: post.slug } }">
+                            <PostCard :post="post" />
+                        </router-link>
                     </li>
                 </ul>
             </div>
