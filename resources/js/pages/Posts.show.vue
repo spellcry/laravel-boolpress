@@ -34,7 +34,7 @@ export default {
                 this.post = post
                 console.log(this.post)
             }).catch(err => {
-                console.log(err.response)
+                this.$router.replace({ name: '404'})
             })
         }
     },
